@@ -2,6 +2,7 @@ package controller
 
 import (
 	"context"
+	"log"
 
 	"github.com/youngprinnce/order-management-system/common/genproto/orders"
 	"github.com/youngprinnce/order-management-system/orders/types"
@@ -22,6 +23,7 @@ func NewOrdersGrpcController(grpc *grpc.Server, ordersService types.OrderService
 
 func (h *OrdersGrpcController) GetOrders(ctx context.Context, req *orders.GetOrdersRequest) (*orders.GetOrderResponse, error) {
 	o := h.ordersService.GetOrders(ctx)
+	log.Println("Orders: ", o)
 	res := &orders.GetOrderResponse{
 		Orders: o,
 	}
@@ -31,10 +33,10 @@ func (h *OrdersGrpcController) GetOrders(ctx context.Context, req *orders.GetOrd
 
 func (h *OrdersGrpcController) CreateOrder(ctx context.Context, req *orders.CreateOrderRequest) (*orders.CreateOrderResponse, error) {
 	order := &orders.Order{
-		OrderID:    42,
-		CustomerID: 2,
-		ProductID:  1,
-		Quantity:   10,
+		OrderID:    int32(len(h.ordersService.GetOrders(ctx)) + 1),
+		CustomerID: req.CustomerID,
+		ProductID:  req.ProductID,
+		Quantity:   req.Quantity,
 	}
 
 	err := h.ordersService.CreateOrder(ctx, order)
@@ -47,4 +49,13 @@ func (h *OrdersGrpcController) CreateOrder(ctx context.Context, req *orders.Crea
 	}
 
 	return res, nil
+}
+
+func (h *OrdersGrpcController) GetOrder(ctx context.Context, req *orders.GetOrderRequest) (*orders.Order, error) {
+	o, err := h.ordersService.GetOrder(ctx, req.OrderID)
+	if err != nil {
+		return nil, err
+	}
+
+	return o, nil
 }

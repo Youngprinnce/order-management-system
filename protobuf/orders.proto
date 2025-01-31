@@ -5,6 +5,7 @@ option go_package = "github.com/youngprinnce/order-management-system/common/orde
 service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
   rpc GetOrders(GetOrdersRequest) returns (GetOrderResponse) {}
+  rpc GetOrder(GetOrderRequest) returns (Order) {}
 }
 
 message Order {
@@ -30,4 +31,8 @@ message GetOrdersRequest {
 
 message GetOrderResponse {
   repeated Order orders = 1;
+}
+
+message GetOrderRequest {
+  int32 orderID = 1;
 }

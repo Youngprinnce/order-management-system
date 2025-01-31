@@ -24,3 +24,12 @@ func (s *OrderService) CreateOrder(ctx context.Context, order *orders.Order) err
 func (s *OrderService) GetOrders(ctx context.Context) []*orders.Order {
 	return ordersDb
 }
+
+func (s *OrderService) GetOrder(ctx context.Context, orderID int32) (*orders.Order, error) {
+	for _, o := range ordersDb {
+		if o.OrderID == orderID {
+			return o, nil
+		}
+	}
+	return nil, nil
+}
