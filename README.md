@@ -150,7 +150,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Protocol Buffers](https://developers.google.com/protocol-buffers)
 - [Go](https://golang.org/)
 
----
-
-This README provides an overview of the project, how to set it up, and how to use it. If you have any questions or run into issues, please feel free to open an issue on GitHub.
-
