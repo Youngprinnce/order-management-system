@@ -1,4 +1,4 @@
-package handler
+package controller
 
 import (
 	"context"
@@ -13,12 +13,10 @@ type OrdersGrpcController struct {
 	orders.UnimplementedOrderServiceServer
 }
 
-func NewGrpcOrdersService(grpc *grpc.Server, ordersService types.OrderService) {
+func NewOrdersGrpcController(grpc *grpc.Server, ordersService types.OrderService) {
 	gRPCHandler := &OrdersGrpcController{
 		ordersService: ordersService,
 	}
-
-	// register the OrderServiceServer
 	orders.RegisterOrderServiceServer(grpc, gRPCHandler)
 }
 
